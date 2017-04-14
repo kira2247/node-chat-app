@@ -35,7 +35,12 @@ io.on('connection', (socket)=>{
 
   socket.on('createMessage', (message)=>{
     console.log('CreateMessage', message);
-  })
+    io.emit('newMessage',{
+      from: message.from,
+      text: message.text,
+      createdAt: new Date().getTime()
+    });
+  });
 
   socket.on('disconnect', ()=>{
     console.log('User was disconnected from server');
