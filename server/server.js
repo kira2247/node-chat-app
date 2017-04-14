@@ -3,6 +3,7 @@ const http = require('http');
 const express = require('express');
 const socketIO = require('socket.io');
 
+const {generateMessage} = require('./utils/message');
 //setup public path
 const publicPath = path.join(__dirname,'../public');
 
@@ -19,17 +20,10 @@ io.on('connection', (socket)=>{
   //socket.emit from admin text welcome to the chat app
   //socket.broadcast.emit from admin text new user joined
 
-  socket.emit('newMessage', {
-    from: 'Admin',
-    text: 'Welcome to the chat app'
-  });
+  socket.emit('newMessage', generateMessage('Admin','Welcome to the chat app'));
 
   //broadcast to all connected client except for the new one connect recently
-  socket.broadcast.emit('newMessage',{
-    from:'Admin',
-    text:'New user joined',
-    createdAt: new Date().getTime()
-  })
+  socket.broadcast.emit('newMessage',generateMessage('Admin', 'New User Joined'));
 
   //server emit newEmail event to client
   // socket.emit('newEmail', {
