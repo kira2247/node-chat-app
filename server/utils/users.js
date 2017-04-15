@@ -30,10 +30,22 @@ class Users {
     return this.users.filter((user)=>user.id ===id)[0];
   }
 
+  getUserByName(name){
+    return this.users.filter((user)=>user.name===name)[0];
+  }
+
   getUserList(room){
     let users = this.users.filter((user) => user.room === room);
     let namesArray = users.map((user) => user.name);
     return namesArray;
+  }
+
+  isDuplicateUser(name,room){
+    let duplicateUser = this.users.filter((user) => user.name === name && user.room === room);
+    if(duplicateUser.length >0){
+      return true;
+    }
+    return false;
   }
 }
 
